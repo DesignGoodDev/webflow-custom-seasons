@@ -1,0 +1,93 @@
+<style>
+  .menu-opened .menu-links {
+    left: 0;
+  }
+  .menu-opened .hamburger {
+  	color: #E5DCCA;
+  }
+  .menu-opened .hamburger .top,
+  .menu-opened .hamburger .middle,
+  .menu-opened .hamburger .bottom {
+  	background-color: #E5DCCA;
+  }
+  #nav {
+  	position: relative;
+    z-index: 1000;
+    -webkit-animation: none;
+    animation: none;
+  }
+</style>
+<script>
+jQuery(function($) {
+  	$('a.slide-to').not('.home a.slide-to').removeClass('slide-to');
+	$('.hamburger').on('click', function() {
+		$('body').toggleClass('menu-opened');
+      	$('.hamburger .menu-toggle').text('Close');
+
+      	if($('body').hasClass('menu-opened')) {
+        	$('.hamburger .menu-toggle').text('Close');
+        } else {
+        	$('.hamburger .menu-toggle').text('Menu');
+        }
+
+	});
+	$(document).on({
+		click: function(e) {
+			e.preventDefault();
+			if ($('body').hasClass('menu-opened')) {
+              $('.hamburger .menu-toggle').text('Menu');
+				$('body').removeClass('menu-opened');
+
+			}
+		}
+	}, 'a.slide-to');
+});
+</script>
+
+<script>
+var $buoop = {
+	required: {e:-2,c: -20,f: -20,o: -20,o_a: -20,s: -20,y: -20,v: -20,uc: -20,ios: -20,samsung: -20},
+	text: "You are using an outdated browser! Please update or switch to a different browser to view this site.",
+	no_permanent_hide: true,
+  	insecure: false,
+  	unsupported: false,
+	reminder: 0,
+	api: 2019.05,
+};
+function $buo_f(){
+	var e = document.createElement("script");
+	e.src = "//browser-update.org/update.min.js";
+	document.body.appendChild(e);
+};
+try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
+catch(e){window.attachEvent("onload", $buo_f)}
+</script>
+
+<script>
+function ready( callback ) {
+  if (document.readyState!='loading') callback();
+  else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
+  else document.attachEvent('onreadystatechange', function(){
+    if (document.readyState=='complete') callback();
+  });
+}
+function openAllExternalsInTabs() {
+  var thisDomain = location.hostname;
+  var externalDomains = 'a:not([href*="' + thisDomain + '"]):not([href^="/"]):not([href^="#"]):not([href^="?"])';
+  var allExternalLinks = document.querySelectorAll( externalDomains );
+  for( var i in allExternalLinks ) {
+  	allExternalLinks[i].target = '_blank';
+  }
+}
+function addNoReferrer() {
+  var selector = '[target="_blank"]';
+  var externalLinks = document.querySelectorAll( selector );
+  for( var i in externalLinks) {
+    externalLinks[i].rel = 'noreferrer';
+  }
+}
+ready( function() {
+	openAllExternalsInTabs();
+	addNoReferrer();
+});
+</script>

@@ -1,44 +1,71 @@
-<style>
-  .menu-opened .menu-links {
-    left: 0;
-  }
-  .menu-opened .hamburger {
-    color: #E5DCCA;
-  }
-  .menu-opened .hamburger .top,
-  .menu-opened .hamburger .middle,
-  .menu-opened .hamburger .bottom {
-    background-color: #E5DCCA;
-  }
-  #nav {
-    position: relative;
-    z-index: 1000;
-    -webkit-animation: none;
-    animation: none;
-  }
-</style>
 <script>
-jQuery(function($) {
-  $('a.slide-to').not('.home a.slide-to').removeClass('slide-to');
-  $('.hamburger').on('click', function() {
-    $('body').toggleClass('menu-opened');
-    $('.hamburger .menu-toggle').text('Close');
-    if ($('body').hasClass('menu-opened')) {
-      $('.hamburger .menu-toggle').text('Close');
-    } else {
-      $('.hamburger .menu-toggle').text('Menu');
-    }
-  });
-  $(document).on({
-    click: function(e) {
-      e.preventDefault();
-      if ($('body').hasClass('menu-opened')) {
-        $('.hamburger .menu-toggle').text('Menu');
-        $('body').removeClass('menu-opened');
-      }
-    }
-  }, 'a.slide-to');
+ready( function() {
+  handleNavigation();
 });
+
+function ready( callback ) {
+  if (document.readyState != 'loading') callback();
+  else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
+  else document.attachEvent('onreadystatechange', function() {
+    if (document.readyState == 'complete') callback();
+  });
+}
+
+function handleNavigation() {
+  const siteNavigation = document.getElementById( 'nav' );
+
+  if ( ! siteNavigation ) {
+    return;
+  }
+
+  const hamburger = document.querySelectorAll('.hamburger')[0];
+
+  if ( ! hamburger ) {
+    return;
+  }
+
+  const menuLabel = hamburger.querySelectorAll( '.menu-toggle' )[0];
+
+  if ( ! menuLabel ) {
+    return;
+  }
+
+  hamburger.addEventListener( 'click', toggleMobileMenu );
+
+  function toggleMobileMenu( event ) {
+    document.body.classList.toggle( 'menu-opened' );
+
+    if ( hamburger.getAttribute( 'aria-expanded' ) === 'true' ) {
+      hamburger.setAttribute( 'aria-expanded', 'false' );
+      menuLabel.innerHTML = 'Menu';
+    } else {
+      hamburger.setAttribute( 'aria-expanded', 'true' );
+      menuLabel.innerHTML = 'Close';
+    }
+  }
+
+  document.addEventListener( 'click', function( event ) {
+    const isClickInside = siteNavigation.contains( event.target );
+
+    if ( ! isClickInside ) {
+      document.body.classList.remove( 'menu-opened' );
+      hamburger.setAttribute( 'aria-expanded', 'false' );
+      menuLabel.innerHTML = 'Menu';
+    }
+  } );
+
+  const anchorLinks = siteNavigation.querySelectorAll( 'a.slide-to' );
+
+  for ( const link of anchorLinks ) {
+    link.addEventListener( 'click', function( e ) {
+      e.preventDefault();
+      if ( document.body.classList.contains( 'menu-opened' ) ) {
+        document.body.classList.remove( 'menu-opened' );
+        menuLabel.innerHTML = 'Menu';
+      }
+    });
+  }
+}
 </script>
 
 <script>
@@ -61,12 +88,23 @@ catch(e){window.attachEvent("onload", $buo_f)}
 </script>
 
 <script>
+ready( function() {
+  removeInvisibleElements();
+  openAllExternalsInTabs();
+  addNoReferrer();
+});
 function ready( callback ) {
   if (document.readyState!='loading') callback();
   else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
   else document.attachEvent('onreadystatechange', function(){
     if (document.readyState=='complete') callback();
   });
+}
+function removeInvisibleElements() {
+  const allWebflowHiddenEls = document.querySelectorAll('.w-condition-invisible');
+  for (let i=0 ; i < allWebflowHiddenEls.length; i++) {
+    allWebflowHiddenEls[i].remove();
+  }
 }
 function openAllExternalsInTabs() {
   var thisDomain = location.hostname;
@@ -83,8 +121,4 @@ function addNoReferrer() {
     externalLinks[i].rel = 'noreferrer';
   }
 }
-ready( function() {
-  openAllExternalsInTabs();
-  addNoReferrer();
-});
 </script>

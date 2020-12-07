@@ -1,0 +1,31 @@
+<style>
+.w-richtext ul {
+  padding-left: 0;
+  list-style: none;
+}
+.w-richtext ul li {
+  position: relative;
+  margin-bottom: 12px;
+  margin-left: 10px;
+}
+.w-richtext ul li::before {
+  position: absolute;
+  top: 0;
+  left: -10px;
+  content: '> ';
+}
+.radio-button.w--redirected-checked {
+  position: relative;
+}
+.radio-button.w--redirected-checked::after {
+  position: absolute;
+  top: 0;
+  left: 4px;
+  font-size: 14px;
+  content: 'X';
+}
+h4 a {
+  color: #385d5b;
+  text-decoration: none;
+}
+</style>

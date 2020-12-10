@@ -1,0 +1,39 @@
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  ready(function () {
+    enablePraiseSwiper();
+  });
+  function ready(callback) {
+    if (document.readyState != 'loading') callback();
+    else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
+    else
+      document.attachEvent('onreadystatechange', function () {
+        if (document.readyState == 'complete') callback();
+      });
+  }
+  let praiseSwiper;
+  const enablePraiseSwiper = function() {
+    praiseSwiper = new Swiper ('.swiper-container.swiper--praise', {
+      speed: 400,
+      loop: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      autoHeight: true,
+      a11y: true,
+      keyboardControl: true,
+      grabCursor: true,
+      breakpoints: {
+        // when window width is >= 768px
+        768: {
+          autoHeight: false,
+          autoplay: {
+            delay: 7000,
+            disableOnInteraction: false,
+          },
+        }
+      }
+    });
+  };
+</script>
